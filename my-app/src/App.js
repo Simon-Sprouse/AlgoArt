@@ -7,10 +7,10 @@ import { useState } from "react"
 function App() {
 
 
-    const [isTrue, setIsTrue] = useState(false);
+    const [circleCount, setCircleCount] = useState(0);
 
     function startButtonClick() { 
-        setIsTrue(!isTrue);
+        setCircleCount(circleCount + 1);
     }
 
 
@@ -25,7 +25,7 @@ function App() {
                 <SidePanel startButtonFunction={startButtonClick}/>
             </div>
             <div className="Display">
-                <Display generateArt={isTrue}/>
+                <Display circleCount={circleCount}/>
             </div>
         </div>
         
