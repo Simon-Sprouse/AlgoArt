@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import SidePanel from "./SidePanel.js"
+import Display from "./Display.js"
+
+import { useState } from "react"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+    const [isTrue, setIsTrue] = useState(false);
+
+    function startButtonClick() { 
+        setIsTrue(!isTrue);
+    }
+
+
+    return (
+        <div className="App">
+        <header className="App-header">
+        <h1>Algo Art Generator</h1>
+        </header>
+
+        <div className="PanelAndDisplay">
+            <div className="Panel">
+                <SidePanel startButtonFunction={startButtonClick}/>
+            </div>
+            <div className="Display">
+                <Display generateArt={isTrue}/>
+            </div>
+        </div>
+        
+        </div>
+
+    );
 }
 
 export default App;
