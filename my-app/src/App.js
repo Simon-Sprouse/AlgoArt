@@ -2,17 +2,25 @@ import './App.css';
 import SidePanel from "./SidePanel.js"
 import Display from "./Display.js"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 function App() {
 
 
     const [circleCount, setCircleCount] = useState(0);
+    const updateInterval = 1000;
 
     function startButtonClick() { 
         setCircleCount(circleCount + 1);
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCircleCount(circleCount + 1);
+        }, updateInterval);
+
+        return () => clearInterval(interval);
+    })
 
     return (
         <div className="App">
