@@ -9,17 +9,13 @@ function App() {
 
     const [circleCount, setCircleCount] = useState(1);
 
-    const [intervalId, setIntervalId] = useState(null);
+    const [intervalId, setIntervalId] = useState(null);  // store id of interval generating function
     const [updateInterval, setUpdateInterval] = useState(500);
 
     function startButtonClick() { 
         if (!intervalId) { 
             const id = setInterval(() => {
-                
-                setCircleCount(prevCircleCount => { 
-                    console.log("Circle Count: ", prevCircleCount + 1);
-                    return prevCircleCount + 1;
-                });
+                setCircleCount(prevCircleCount => prevCircleCount + 1);
             }, updateInterval);
             setIntervalId(id);
         }
@@ -36,6 +32,24 @@ function App() {
         setUpdateInterval(value);
     }
 
+    // update setInterval, if running, when updateInterval is changed
+    useEffect(() => { 
+        if (intervalId) { 
+            clearInterval(intervalId);
+            const id = setInterval(() => {
+                setCircleCount(prevCircleCount => prevCircleCount + 1)
+            }, updateInterval)
+            setIntervalId(id);
+        } 
+
+        return () => {
+            if (intervalId) { 
+                clearInterval(intervalId);
+            }
+        }
+    }, [updateInterval]);
+
+    // remove setInterval if intervalId changes. 
     useEffect(() => {
         return () => { 
             if (intervalId) { 
