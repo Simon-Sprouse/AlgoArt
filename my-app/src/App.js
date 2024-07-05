@@ -10,7 +10,7 @@ function App() {
     const [circleCount, setCircleCount] = useState(1);
 
     const [intervalId, setIntervalId] = useState(null);
-    const updateInterval = 500;
+    const [updateInterval, setUpdateInterval] = useState(500);
 
     function startButtonClick() { 
         if (!intervalId) { 
@@ -30,6 +30,10 @@ function App() {
             clearInterval(intervalId);
             setIntervalId(null);
         }
+    }
+
+    function sliderToggle(value) {
+        setUpdateInterval(value);
     }
 
     useEffect(() => {
@@ -53,6 +57,7 @@ function App() {
                 <SidePanel 
                     startButtonFunction={startButtonClick}
                     stopButtonFunction={stopButtonClick}
+                    sliderFunction={sliderToggle}
                 />
             </div>
             <div className="Display">
