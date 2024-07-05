@@ -7,20 +7,40 @@ import { useState, useEffect } from "react"
 function App() {
 
 
-    const [circleCount, setCircleCount] = useState(0);
-    const updateInterval = 1000;
+    const [circleCount, setCircleCount] = useState(1);
+
+    const [intervalId, setIntervalId] = useState(null);
+    const updateInterval = 500;
 
     function startButtonClick() { 
-        setCircleCount(circleCount + 1);
+        if (!intervalId) { 
+            const id = setInterval(() => {
+                
+                setCircleCount(prevCircleCount => { 
+                    console.log("Circle Count: ", prevCircleCount + 1);
+                    return prevCircleCount + 1;
+                });
+            }, updateInterval);
+            setIntervalId(id);
+        }
+    }
+
+    function stopButtonClick() { 
+        if (intervalId) { 
+            clearInterval(intervalId);
+            setIntervalId(null);
+        }
     }
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCircleCount(circleCount + 1);
-        }, updateInterval);
+        return () => { 
+            if (intervalId) { 
+                clearInterval(intervalId);
+            }
+        }
+    }, [intervalId]);
 
-        return () => clearInterval(interval);
-    })
+    
 
     return (
         <div className="App">
@@ -30,7 +50,10 @@ function App() {
 
         <div className="PanelAndDisplay">
             <div className="Panel">
-                <SidePanel startButtonFunction={startButtonClick}/>
+                <SidePanel 
+                    startButtonFunction={startButtonClick}
+                    stopButtonFunction={stopButtonClick}
+                />
             </div>
             <div className="Display">
                 <Display circleCount={circleCount}/>

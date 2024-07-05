@@ -1,13 +1,13 @@
 import "./SidePanel.css"
 
-function SidePanel({startButtonFunction}) { 
+function SidePanel({startButtonFunction, stopButtonFunction}) { 
 
 
     return (
         <div>
             <p>This is the side panel</p>
             <button onClick={startButtonFunction}>Start</button>
-            <button>Stop</button>
+            <button onClick={stopButtonFunction}>Stop</button>
         </div>
         
         
