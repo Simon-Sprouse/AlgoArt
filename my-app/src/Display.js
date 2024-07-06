@@ -2,28 +2,12 @@ import { useState, useRef, useEffect } from "react"
 
 function Display({ circleCount }) { 
 
-
-    const [pixels, setPixels] = useState([]);
-
     const canvasRef = useRef(null);
     const canvasHeight = 400;
     const canvasWidth = 600;
 
-    useEffect( () => {
-
-        const start = new Date();
-
-        const newPixels = Array.from({ length: canvasHeight }, () => 
-            Array.from({ length: canvasWidth}, () => 
-                ({color: 'black'})
-            )
-        )
-
-        // generate circle
-        const centerX = Math.floor(Math.random() * canvasWidth);
-        const centerY = Math.floor(Math.random() * canvasHeight);
-        const radius = 20;
-
+    
+    function drawCircle(array, centerX, centerY, radius, color) { 
         // Only look to change color within the square that the circle might exist in. 
         const lowerBoundX = Math.max(0, centerX - radius);
         const lowerBoundY = Math.max(0, centerY - radius);
@@ -36,12 +20,29 @@ function Display({ circleCount }) {
                 const dx = x - centerX;
                 const dy = y - centerY;
                 if (dx * dx + dy * dy <= radius * radius) { 
-                    newPixels[y][x].color = 'white'
+                    array[y][x].color = color
                 }
             }
         }
+    }
 
-        // setPixels(newPixels); // do I actually need this state? 
+    useEffect( () => {
+
+        const newPixels = Array.from({ length: canvasHeight }, () => 
+            Array.from({ length: canvasWidth}, () => 
+                ({color: 'black'})
+            )
+        )
+
+        // generate circle
+        const centerX = Math.floor(Math.random() * canvasWidth);
+        const centerY = Math.floor(Math.random() * canvasHeight);
+        const radius = 20;
+
+        
+        drawCircle(newPixels, centerX, centerY, radius + 2, "white");
+        drawCircle(newPixels, centerX, centerY, radius, "magenta");
+
 
         // draw pixels on canvas
 
@@ -53,15 +54,9 @@ function Display({ circleCount }) {
             });
         });
 
-        const end = new Date();
-
-        const elapsed_time = end - start;
-
-        console.log(elapsed_time);
 
 
-
-    }, [circleCount]) // leave this empty so no re-render happens
+    }, [circleCount]) 
 
     return (
         <div>
