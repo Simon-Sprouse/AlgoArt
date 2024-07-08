@@ -1,12 +1,14 @@
 import { useRef, useEffect } from "react"
 
-import { resetBackground, drawCircleByContext } from "./logic";
+import { resetBackground, drawCircleByContext, Path } from "./logic";
 
 function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, radiusSize, borderSize, saveCanvas, setSaveCanvas }) { 
 
     const canvasRef = useRef(null);
     const canvasHeight = 400;
     const canvasWidth = 600;
+
+    const myPath = useRef(new Path(canvasHeight, canvasWidth));
 
     /*
     Todo list: 
@@ -38,6 +40,8 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
         resetBackground(ctx, "black");
         // setCircleCount(0);
         setToggleReset(false);
+
+        
         
 
     }, [toggleReset]);
@@ -46,16 +50,13 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     // Re-render on circleCount update
     useEffect( () => {
 
-
-        // generate circle
-        const centerX = Math.floor(Math.random() * canvasWidth);
-        const centerY = Math.floor(Math.random() * canvasHeight);
-
-
-        
+        const currentPath = myPath.current;
+    
         const ctx = canvasRef.current.getContext('2d');
-        drawCircleByContext(ctx, centerX, centerY, radiusSize + borderSize, "white")
-        drawCircleByContext(ctx, centerX, centerY, radiusSize, "green");
+        currentPath.setContext(ctx);
+
+        currentPath.drawCircle(radiusSize, borderSize, "white", "blue")
+        currentPath.step();
 
 
     }, [circleCount]);
