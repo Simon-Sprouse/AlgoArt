@@ -14,6 +14,8 @@ function App() {
     const [radiusSize, setRadiusSize] = useState(20);
     const [borderSize, setBorderSize] = useState(2);
 
+    const [saveCanvas, setSaveCanvas] = useState(false);
+
     // variables to track interval id / update frequency
     const [intervalId, setIntervalId] = useState(null);  
     const [updateInterval, setUpdateInterval] = useState(500);
@@ -50,6 +52,10 @@ function App() {
 
     function borderSliderToggle(value) { 
         setBorderSize(value);
+    }
+
+    function saveButtonClick() { 
+        setSaveCanvas(true);
     }
 
     // update setInterval, if running, when updateInterval is changed
@@ -95,6 +101,7 @@ function App() {
                     speedSliderFunction={speedSliderToggle}
                     radiusSliderFunction={radiusSliderToggle}
                     borderSliderFunction={borderSliderToggle}
+                    saveButtonFunction={saveButtonClick}
                 />
             </div>
             <div className="Display">
@@ -105,6 +112,8 @@ function App() {
                     setToggleReset={setToggleReset}
                     radiusSize={radiusSize}
                     borderSize={borderSize}
+                    saveCanvas={saveCanvas}
+                    setSaveCanvas={setSaveCanvas}
                 />
             </div>
         </div>

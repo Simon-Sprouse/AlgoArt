@@ -8,6 +8,7 @@ function SidePanel(
         speedSliderFunction, 
         radiusSliderFunction,
         borderSliderFunction,
+        saveButtonFunction,
     }
     ) { 
 
@@ -64,6 +65,10 @@ function SidePanel(
                     defaultValue="2"
                     onChange={handleBorderSliderChange}
                 ></input>
+            </div>
+
+            <div>
+                <button onClick={saveButtonFunction}>Save</button>
             </div>
             
 
