@@ -7,10 +7,15 @@ import { useState, useEffect } from "react"
 function App() {
 
 
-    const [circleCount, setCircleCount] = useState(1);
+    // variables passed to display component
+    const [circleCount, setCircleCount] = useState(0);
+    const [toggleReset, setToggleReset] = useState(true); // should the canvas be nuked?
 
-    const [intervalId, setIntervalId] = useState(null);  // store id of interval generating function
+    // variables to track interval id / update frequency
+    const [intervalId, setIntervalId] = useState(null);  
     const [updateInterval, setUpdateInterval] = useState(500);
+
+    
 
     function startButtonClick() { 
         if (!intervalId) { 
@@ -26,6 +31,10 @@ function App() {
             clearInterval(intervalId);
             setIntervalId(null);
         }
+    }
+
+    function resetButtonClick() { 
+        setToggleReset(true);
     }
 
     function sliderToggle(value) {
@@ -71,11 +80,17 @@ function App() {
                 <SidePanel 
                     startButtonFunction={startButtonClick}
                     stopButtonFunction={stopButtonClick}
+                    resetButtonFunction={resetButtonClick}
                     sliderFunction={sliderToggle}
                 />
             </div>
             <div className="Display">
-                <Display circleCount={circleCount}/>
+                <Display 
+                    circleCount={circleCount} 
+                    setCircleCount={setCircleCount}
+                    toggleReset={toggleReset}
+                    setToggleReset={setToggleReset}
+                />
             </div>
         </div>
         

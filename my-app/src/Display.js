@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 
-function Display({ circleCount }) { 
+function Display({ circleCount, setCircleCount, toggleReset, setToggleReset }) { 
 
     const canvasRef = useRef(null);
     const canvasHeight = 400;
@@ -8,33 +8,21 @@ function Display({ circleCount }) {
 
     /*
     Todo list: 
-    - depreciate bitmap circle function
-    - more efficient background fill?
-    - add option for background reset
+    - depreciate bitmap circle function DONE
+    - more efficient background fill DONE
+    - add option for background reset DONE
     - fix slider initial position
     - add slider for border size
     - add slider for radius size
+    - add motion options
+    - add color morph
     - add color picker wheel
+    - bug where reseting the circle count to 0 causes the useEffect to add one more circle
     */
 
-    
-    function drawCircle(array, centerX, centerY, radius, color) { 
-        // Only look to change color within the square that the circle might exist in. 
-        const lowerBoundX = Math.max(0, centerX - radius);
-        const lowerBoundY = Math.max(0, centerY - radius);
-        const upperBoundX = Math.min(canvasWidth, centerX + radius);
-        const upperBoundY = Math.min(canvasHeight, centerY + radius);
-
-        // can probably make this faster
-        for (let y = lowerBoundY; y < upperBoundY; y++) { 
-            for (let x = lowerBoundX; x < upperBoundX; x++) { 
-                const dx = x - centerX;
-                const dy = y - centerY;
-                if (dx * dx + dy * dy <= radius * radius) { 
-                    array[y][x].color = color
-                }
-            }
-        }
+    function resetBackground(ctx, color) { 
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     }
 
     function drawCircleByContext(ctx, centerX, centerY, radius, color) { 
@@ -45,26 +33,19 @@ function Display({ circleCount }) {
     }
 
 
+    // Initialize background
     useEffect(() => { 
-        const newPixels = Array.from({ length: canvasHeight }, () => 
-            Array.from({ length: canvasWidth}, () => 
-                ({color: 'black'})
-            )
-        )
-        const ctx = canvasRef.current.getContext('2d');
-    
-        newPixels.forEach((row, y) => { // fixed an issue where the old program depended on state and was late on render
-            row.forEach((pixel, x) => { 
-                ctx.fillStyle = pixel.color;
-                ctx.fillRect(x, y, 1, 1);
-            });
-        });
+        
+        const ctx = canvasRef.current.getContext("2d");
+        resetBackground(ctx, "black");
+        // setCircleCount(0);
+        setToggleReset(false);
+        
 
-        console.log("Starting the canvas black");
-
-    }, []);
+    }, [toggleReset]);
     
 
+    // Re-render on circleCount update
     useEffect( () => {
 
 
@@ -77,8 +58,6 @@ function Display({ circleCount }) {
         const ctx = canvasRef.current.getContext('2d');
         drawCircleByContext(ctx, centerX, centerY, radius + 2, "white")
         drawCircleByContext(ctx, centerX, centerY, radius, "purple");
-
-  
 
 
     }, [circleCount]) 
