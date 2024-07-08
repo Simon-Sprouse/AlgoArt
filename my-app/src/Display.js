@@ -30,6 +30,9 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     - handle canvas resize, fix hardcoded dimensions
     - combine start/stop buttons
     - organize files into directories
+    - figure out multiple paths
+    - mirroring options? 
+    - conditional movements? 
     */
 
 
@@ -51,12 +54,11 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     useEffect( () => {
 
         const currentPath = myPath.current;
-    
         const ctx = canvasRef.current.getContext('2d');
-        currentPath.setContext(ctx);
 
+        currentPath.setContext(ctx);
         currentPath.drawCircle(radiusSize, borderSize, "white", "blue")
-        currentPath.step();
+        currentPath.stepClose();
 
 
     }, [circleCount]);

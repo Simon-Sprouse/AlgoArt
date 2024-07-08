@@ -42,6 +42,25 @@ export class Path {
         this.centerY = Math.floor(Math.random() * this.canvasHeight);
     }
 
+    stepClose() { 
+        const magnitude = 20;
+        const direction = Math.random() * 2 * Math.PI;
+
+        const dX = magnitude * Math.cos(direction);
+        const dY = magnitude * Math.sin(direction);
+
+        const newX = this.centerX + dX;
+        const newY = this.centerY + dY;
+
+        if (newX > 0 && newX < canvasWidth) { 
+            this.centerX = newX;
+        }
+
+        if (newY > 0 && newY < canvasHeight) { 
+            this.centerY = newY;
+        }
+    }
+
     setContext(context) { 
         this.ctx = context;
     }
