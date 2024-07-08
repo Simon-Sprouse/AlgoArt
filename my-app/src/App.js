@@ -11,6 +11,9 @@ function App() {
     const [circleCount, setCircleCount] = useState(0);
     const [toggleReset, setToggleReset] = useState(true); // should the canvas be nuked?
 
+    const [radiusSize, setRadiusSize] = useState(20);
+    const [borderSize, setBorderSize] = useState(2);
+
     // variables to track interval id / update frequency
     const [intervalId, setIntervalId] = useState(null);  
     const [updateInterval, setUpdateInterval] = useState(500);
@@ -37,8 +40,16 @@ function App() {
         setToggleReset(true);
     }
 
-    function sliderToggle(value) {
+    function speedSliderToggle(value) {
         setUpdateInterval(value);
+    }
+
+    function radiusSliderToggle(value) {
+        setRadiusSize(value);
+    }
+
+    function borderSliderToggle(value) { 
+        setBorderSize(value);
     }
 
     // update setInterval, if running, when updateInterval is changed
@@ -81,7 +92,9 @@ function App() {
                     startButtonFunction={startButtonClick}
                     stopButtonFunction={stopButtonClick}
                     resetButtonFunction={resetButtonClick}
-                    sliderFunction={sliderToggle}
+                    speedSliderFunction={speedSliderToggle}
+                    radiusSliderFunction={radiusSliderToggle}
+                    borderSliderFunction={borderSliderToggle}
                 />
             </div>
             <div className="Display">
@@ -90,6 +103,8 @@ function App() {
                     setCircleCount={setCircleCount}
                     toggleReset={toggleReset}
                     setToggleReset={setToggleReset}
+                    radiusSize={radiusSize}
+                    borderSize={borderSize}
                 />
             </div>
         </div>
