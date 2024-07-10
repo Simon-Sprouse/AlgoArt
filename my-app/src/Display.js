@@ -19,9 +19,12 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     - add slider for border size DONE
     - add slider for radius size DONE
     - add function to save canvas to file DONE
-    - add motion options
-    - add color morph
+    - add motion options DONE
+    - add color morph DONE
+    - rgb to hsv space
     - add color picker wheel
+    - color gradient options
+    - add step size option
     - circleCount vs circlesOnCanvas
     - fix speedSlider direction
     - make sliders non-linear (quadratic maybe), 
@@ -33,6 +36,10 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     - figure out multiple paths
     - mirroring options? 
     - conditional movements? 
+    - features as functions of xpos, ypos, time, circle count (ie borderSize)
+    - maybe make the angle of motion autoregressive as well? 
+    - preset settings
+    - random settings
     */
 
 
@@ -57,7 +64,13 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
         const ctx = canvasRef.current.getContext('2d');
 
         currentPath.setContext(ctx);
-        currentPath.drawCircle(radiusSize, borderSize, "white", "blue")
+
+        
+        
+        currentPath.setSize(radiusSize, borderSize);
+        currentPath.drawCircle();
+
+        currentPath.shiftColor();
         currentPath.stepClose();
 
 

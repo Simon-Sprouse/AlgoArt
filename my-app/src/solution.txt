@@ -1,0 +1,31 @@
+def Solution(numbers):
+
+    if numbers == None:
+        return [None, None]
+
+    max_sum = numbers[0]
+    temp_sum = numbers[0]
+    left = 0
+    temp_left = 0
+    right = 0
+    
+    for index, number in enumerate(numbers): 
+        
+        // max_sum already initialized
+        if index == 0:
+            continue
+        
+        // if the previous sum (left hand) is negative, discard and move up left_pointer
+        if temp_sum < 0: 
+            temp_left = index
+            temp_sum = number
+        else: 
+            temp_sum += number
+        
+        // once we have max sum (so far), we update max_sum and left / right pointer
+        if temp_sum > max_sum:
+            max_sum = temp_sum
+            left = temp_left
+            right = index
+            
+    return [left, right]
