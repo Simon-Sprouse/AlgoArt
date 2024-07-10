@@ -20,6 +20,10 @@ function hsvToRgb(h, s, v) {
 
     let r, g, b;
 
+    h = Math.round(h);
+    s = Math.round(s);
+    v = Math.round(v);
+
     s /= 100;
     v /= 100;
 
@@ -98,7 +102,7 @@ export class Path {
     }
 
     stepClose() { 
-        const magnitude = 20;
+        const magnitude = 5;
         const direction = Math.random() * 2 * Math.PI;
 
         const dX = magnitude * Math.cos(direction);
@@ -118,23 +122,25 @@ export class Path {
 
     shiftColor() { 
 
+        const shiftSize = 0.01;
+
         if (this.colorShiftUp == true) { 
-            if (this.circleColor[0] == 359) { 
+            if (this.circleColor[0] >= 359) { 
                 this.colorShiftUp = false;
-                this.circleColor[0] -= 1;
+                this.circleColor[0] -= shiftSize;
             }
             else { 
-                this.circleColor[0] += 1;
+                this.circleColor[0] += shiftSize;
             }
             
         }
         else { 
-            if (this.circleColor[0] == 0) { 
+            if (this.circleColor[0] <= 0) { 
                 this.colorShiftUp = true;
-                this.circleColor[0] += 1;
+                this.circleColor[0] += shiftSize;
             }
             else { 
-                this.circleColor[0] -= 1;
+                this.circleColor[0] -= shiftSize;
             }
         }
 

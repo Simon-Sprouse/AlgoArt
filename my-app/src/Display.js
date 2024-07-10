@@ -21,7 +21,9 @@ function Display({ circleCount, setCircleCount, toggleReset, setToggleReset, rad
     - add function to save canvas to file DONE
     - add motion options DONE
     - add color morph DONE
-    - rgb to hsv space
+    - rgb to hsv space DONE
+    - slider for step size
+    - slider for color shift speed
     - add color picker wheel
     - color gradient options
     - add step size option
